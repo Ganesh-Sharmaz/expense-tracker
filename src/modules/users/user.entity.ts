@@ -1,11 +1,11 @@
 import { Entity, Column, OneToMany, BeforeInsert } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
-import { BaseEntity } from '../../common/entities/base.entity';
+import { AppBaseEntity } from '../../common/entities/base.entity';
 import { IncomeEntry } from '../income/income.entity';
 
 @Entity('users')
-export class User extends BaseEntity {
+export class User extends AppBaseEntity {
   @Column({ unique: true })
   username!: string;
 
@@ -29,5 +29,5 @@ export class User extends BaseEntity {
   }
 
   @OneToMany(() => IncomeEntry, (income) => income.user)
-  incomeEntries: IncomeEntry[];
+  incomeEntries!: IncomeEntry[];
 }

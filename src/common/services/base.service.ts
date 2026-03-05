@@ -1,8 +1,8 @@
 import { Repository, FindOptionsWhere } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
-import { BaseEntity } from '../entities/base.entity';
+import { AppBaseEntity } from '../entities/base.entity';
 
-export abstract class BaseService<T extends BaseEntity> {
+export abstract class BaseService<T extends AppBaseEntity> {
   constructor(protected readonly repository: Repository<T>) {}
 
   findAll(): Promise<T[]> {

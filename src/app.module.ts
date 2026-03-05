@@ -7,6 +7,12 @@ import { AuthModule } from './modules/auth/auth.module';
 import { IncomeModule } from './modules/income/income.module';
 import { UsersModule } from './modules/users/user.module';
 import { JwtAuthGuard } from './modules/auth/gaurds/jwt-auth.guard';
+import { AllocationModule } from './modules/allocations/allocation.module';
+import { CategoryModule } from './modules/category/category.module';
+import { BudgetRuleModule } from './modules/budget/budget-rule.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
+import { EnvelopeTransferModule } from './modules/envelope/envelope-transfer.module';
+import { PeriodicAccrualModule } from './modules/periodic/periodic-accural.module';
 
 @Module({
   imports: [
@@ -17,12 +23,12 @@ import { JwtAuthGuard } from './modules/auth/gaurds/jwt-auth.guard';
     UsersModule,
     AuthModule,
     IncomeModule,
-    // AllocationModule,       ← Chunk 3
-    // CategoryModule,         ← Chunk 4
-    // BudgetRuleModule,       ← Chunk 5
-    // TransactionModule,      ← Chunk 6
-    // EnvelopeTransferModule, ← Chunk 7
-    // PeriodicAccrualModule,  ← Chunk 8
+    AllocationModule,
+    CategoryModule,
+    BudgetRuleModule,
+    TransactionModule,
+    EnvelopeTransferModule,
+    PeriodicAccrualModule,
     // SnapshotModule,         ← Chunk 9
   ],
   providers: [

@@ -1,10 +1,10 @@
 import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
-import { BaseEntity } from '../../common/entities/base.entity';
+import { AppBaseEntity } from '../../common/entities/base.entity';
 import { Allocation } from '../allocations/allocation.entity';
 import { User } from '../users/user.entity';
 
 @Entity('income_entries')
-export class IncomeEntry extends BaseEntity {
+export class IncomeEntry extends AppBaseEntity {
   @ManyToOne(() => User, (user) => user.incomeEntries, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user!: User;

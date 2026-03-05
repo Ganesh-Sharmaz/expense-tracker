@@ -5,16 +5,22 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtPayload } from './strategies/jwt.strategy';
 import { UsersService } from '../users/user.service';
+import { CategoryService } from '../category/category.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
+    private readonly categoryService: CategoryService,
     private readonly jwtService: JwtService,
   ) {}
 
   async signup(dto: CreateUserDto) {
     const user = await this.usersService.create(dto);
+
+    // Auto-seed default categories for the new user
+    await this.categoryService.seedForUser(user.id);
+
     const token = this.generateToken(user.id, user.username);
     return {
       user: {
@@ -28,24 +34,15 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
-    // 1. Find user
     const user = await this.usersService.findByUsername(dto.username);
-    if (!user) {
-      throw new UnauthorizedException('Invalid username or password');
-    }
+    if (!user) throw new UnauthorizedException('Invalid username or password');
 
-    // 2. Compare password
     const isMatch = await bcrypt.compare(dto.password, user.password);
-    if (!isMatch) {
+    if (!isMatch)
       throw new UnauthorizedException('Invalid username or password');
-    }
 
-    // 3. Check active
-    if (!user.is_active) {
-      throw new UnauthorizedException('Account is inactive');
-    }
+    if (!user.is_active) throw new UnauthorizedException('Account is inactive');
 
-    // 4. Return token + safe user object
     const token = this.generateToken(user.id, user.username);
     return {
       user: {
